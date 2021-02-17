@@ -10,25 +10,58 @@ int main(int argc, char *argv[])
     names << "Mary" << "Ann" << "Charlynn" << "Marylynn" << "Margaret"
           << "Kate" << "Rose" << "Gwendolyn";
 
+    QListIterator<QString> javaIterator(names);
+    int maxLength = 0;
+    QString max = "";
+    while(javaIterator.hasNext()) {
+        QString currentName = javaIterator.next();
+        if(currentName.length() > maxLength){
+            maxLength = currentName.length();
+            max = currentName;
+        }
+    }
+    QString output("Longest name: %1");
+    qDebug() << output.arg(max);
 
-    // TODO: using Java-style iterators print the longest name from the list
-    // use QString::arg to output message with this name
+    int minLength = names.at(0).length();
+    QString min = names.at(0);
+    for (QList<QString>::iterator i = names.begin();i != names.end(); ++i){
+        if(i->length() < minLength){
+            minLength = i->length();
+            min = *i;
+        }
+    }
+    qDebug() << min.prepend("Shortest name: ");
 
-
-    // TODO: using STL-style iterators print the shortest name from the list
-    // use QString::prepend and append to output message with this name
-
-
-    // TODO: using foreach and QStringList show all names with "lynn" suffix
-    // and print it separated by ',' as one string
-
+    QStringList strl;
+    foreach(QString str, names){
+        strl.append(str);
+    }
+    strl = strl.filter("lynn");
+    qDebug() << strl.join(',');
 
     // print all names in reverse order
-    // TODO: 1. Using QStack
-
-    // TODO: 2. Using other QList
-
-    // TODO: 3. Without other containers
+    qDebug() << "STACK";
+    QStack<QString> stack;
+    for (int i = 0; i < names.length(); i++){
+        stack.push(names.at(i));
+    }
+    int len = stack.length();
+    for (int i = 0; i < len; i++){
+        qDebug() << stack.pop();
+    }
+    qDebug() << "QLIST";
+    QList<QString> strll;
+    for (int i = names.length() - 1; i >= 0; i--){
+        strll << names.at(i);
+    }
+    for (int i = 0; i < strll.length(); i++){
+        qDebug() << strll.at(i);
+    }
+    qDebug() << "NO QLIST";
+    for (QList<QString>::iterator i = names.end() - 1;i != names.begin() - 1; --i){
+        qDebug() << QString(*i);
+    }
 
     return a.exec();
 }
