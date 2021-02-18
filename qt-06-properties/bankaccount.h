@@ -6,22 +6,31 @@
 class BankAccount : public QObject
 {
     Q_OBJECT
-    // TODO: declare QString holderName property that's represents account holder name
-    //       this property must have getter and setter
 
+    Q_PROPERTY(QString holderName READ holderName WRITE setHolderName)
+    Q_PROPERTY(qint64 balance MEMBER m_balance READ balance CONSTANT)
 
-    // TODO: declare long balance property
-    //       this property should be read-only and associated with variable m_balance
 public:
     explicit BankAccount(QObject *parent = 0);
+
+    QString holderName() const {
+        return m_holderName;
+    }
+
+    void setHolderName(QString str){
+        m_holderName = str;
+    }
 
     void deposit(long amount);
     void withdraw(long amount);
 
-    // TODO: declare and implement holderName getter/setter
-    // TODO: decalre and implement balance getter
+    qint64 balance() const
+    {
+        return m_balance;
+    }
+
 private:
-    // TODO: declare holderName
+    QString m_holderName;
     long m_balance;
 };
 

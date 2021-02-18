@@ -8,11 +8,13 @@ int main(int argc, char *argv[])
 
     // don't change type of account, use it as QObject*
     QObject *account = new BankAccount;
+    account->setProperty("holderName", QString("John Doe"));
+    qDebug() <<account->property("holderName").toString();
 
-    // TODO: set holder name
-    // TODO: print it to qDebug()
+    qDebug() << account->property("balance").toLongLong();
 
-    // TODO: get balance from property to qDebug()
+    account->setProperty("balance", QVariant::fromValue(200L));
+    qDebug() << account->property("balance").toLongLong();
 
     return a.exec();
 }
